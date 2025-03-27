@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { GifService } from 'src/app/gifs/services/gif.service';
 
 interface MenuOptions {
   icon: string;
@@ -28,4 +29,6 @@ export class GifsSideMenuOptionsComponent {
       subLabel: 'Buscar gifs',
     },
   ];
+
+  public gifsService = inject(GifService);
 }
