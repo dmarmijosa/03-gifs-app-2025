@@ -47,10 +47,11 @@ export class GifService {
 
   loadTrendingGifs() {
     this.http
-      .get<GiphyResponse>(`${environment.publicUrl}/gifs/trending`, {
+      .get<GiphyResponse>(`${environment.publicUrl}/gifs/search`, {
         params: {
           api_key: environment.giphyApikey,
           limit: 20,
+          q: 'anime'
         },
       })
       .subscribe((resp) => {
