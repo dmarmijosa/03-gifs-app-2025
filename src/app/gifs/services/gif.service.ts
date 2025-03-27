@@ -63,4 +63,9 @@ export class GifService {
         })
       );
   }
+
+  getHistoryGifs(query: string | undefined): Gif[]{
+    if (!query) return [];
+    return this.searchHistory()[query];
+  }
 }
