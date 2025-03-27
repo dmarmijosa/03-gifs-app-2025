@@ -4,6 +4,7 @@ import { environment } from '@enviroments/environment';
 import type { GiphyResponse } from '../interfaces/giphy.interface';
 import { Gif } from '../interfaces/gif.interface';
 import { GifMapper } from '../mapper/gif.mapper';
+import { map, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -30,21 +31,23 @@ export class GifService {
         const gifs = GifMapper.mapGiphyItemsToGifArray(resp.data);
         this.trendingGifs.set(gifs);
         this.trendingGifsLoading.set(false);
-        console.log({ gifs });
+        //console.log({ gifs });
       });
   }
 
-  searchGifs(query: string) {
-    this.http
-      .get<GiphyResponse>(`${environment.publicUrl}/gifs/search`,{
-        params:{
+  searchGifs(query: string): Observable<Gif[]> {
+    return this.http
+      .get<GiphyResponse>(`${environment.publicUrl}/gifs/search`, {
+        params: {
           api_key: environment.giphyApikey,
           limit: 20,
           q: query,
-        }
+        },
       })
-      .subscribe((resp) => {
-        console.log({ resp });
-      });
+      .pipe(
+        //map(({ data }) => data),
+        //tap((data) => console.log('Giphy data:', data )),
+        map(({ data }) => GifMapper.mapGiphyItemsToGifArray(data))
+      );
   }
 }
