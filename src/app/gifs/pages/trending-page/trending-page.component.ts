@@ -12,6 +12,16 @@ export class TrendingPageComponent {
 
   onScroll(event: Event) {
     const scrollDiv =  this.scrollDivRef()?.nativeElement;
-    console.log(scrollDiv);
+    if(!scrollDiv) return;
+
+    const scrollTop = scrollDiv.scrollTop;
+
+    const clientHeight = scrollDiv.clientHeight;
+    const scrollHeight = scrollDiv.scrollHeight;
+
+    const isAtBottom = scrollTop + clientHeight + 300 >= scrollHeight;
+
+    console.log(isAtBottom);
+    console.log({scrolltotal: scrollTop + clientHeight,scrollHeight});
   }
 }
